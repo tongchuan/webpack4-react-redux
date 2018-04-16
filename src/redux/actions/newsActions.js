@@ -1,5 +1,6 @@
 import newsApi from 'Root/api/newsApi';
 import commonActions from './commonActions';
+import {news as newsTypes } from '../Types';
 export default{
   addTodo(data) {
     // return (dispatch, state) => {
@@ -38,6 +39,20 @@ export default{
           type: 'err',
           err
         });
+      });
+    };
+  },
+  updateRandom(random) {
+    return (dispatch, state) => {
+      let data = state().newState.list;
+      data.map((item) => {
+        item.random = random;
+        return item;
+      });
+      // console.log(state());
+      dispatch({
+        type: newsTypes.NEWS_LIST,
+        data
       });
     };
   }

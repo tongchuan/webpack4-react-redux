@@ -1,11 +1,13 @@
 import initState from '../initState';
+import { news as TYPE} from '../Types';
+
 export default function reduxNews(state = initState.newState, action) {
   switch (action.type) {
-    case 'value':
+    case TYPE.NEWS_ITEM:
       // console.log(action)
       Object.assign(state, action.data);
       break;
-    case 'err':
+    case TYPE.NEWS_LIST:
       Object.assign(state, action.data);
       break;
     default:

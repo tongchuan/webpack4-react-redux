@@ -1,7 +1,7 @@
 import React from 'react';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import newsActions from 'Root/redux/actions/newsActions';
+import userActions from 'Root/redux/actions/userActions';
 /*eslint-disable no-unused-vars*/
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
@@ -36,18 +36,23 @@ const { SubMenu } = Menu;
     }
   }
  */
-class News extends React.Component {
+class User extends React.Component {
   constructor(props) {
     super(props);
-    this.onUpdateNewsList = this.onUpdateNewsList.bind(this);
+    this.onUpdateUser = this.onUpdateUser.bind(this);
   }
   componentDidMount() {
     // this.props.action.addTodo();
     // console.log(this);
   }
-  onUpdateNewsList() {
-    let random = Math.random();
-    this.props.newsAction.updateRandom(random);
+  onUpdateUser() {
+    let data = {
+      name: 'name'+Math.random(),
+      age: 'age'+Math.random(),
+      email: 'email'+Math.random(),
+    };
+    this.props.userAction.updateUser(data);
+    // this.props.newsAction.updateRandom(random);
   }
   render() {
     return (
@@ -57,24 +62,22 @@ class News extends React.Component {
           <Menu
             theme="dark"
             mode="horizontal"
-            defaultSelectedKeys={['2']}
+            defaultSelectedKeys={['3']}
             style={{lineHeight:'64px'}}
           >
             {this.props.menuState.menu.map((item) => (<Menu.Item key={item.key}><Link to={item.action}>{item.name}</Link></Menu.Item>))}
           </Menu>
         </Header>
-        <h2>news List</h2>
+        <h2>User Item</h2>
         <div>
           <ul>
-            {this.props.newState.list.map((item, index) => {
-              return (
-                <li key={index}>{item.id}、{item.title}[{item.random}]</li>
-              );
-            })}
+            <li>姓名：{this.props.userState.name}</li>
+            <li>年龄：{this.props.userState.age}</li>
+            <li>邮箱：{this.props.userState.email}</li>
           </ul>
           <ul>
             <li>
-              <Button onClick={this.onUpdateNewsList} type="primary">更新数据添加随机数</Button>
+              <Button onClick={this.onUpdateUser} type="primary">更新数据添加随机数</Button>
             </li>
           </ul>
         </div>
@@ -84,12 +87,12 @@ class News extends React.Component {
 }
 
 export default connect((state) => {
-  return { newState: state.newState, menuState: state.menuState };
+  return { userState: state.userState, menuState: state.menuState };
 },(dispatch) => {
-  return {newsAction: bindActionCreators(newsActions, dispatch)};
+  return {userAction: bindActionCreators(userActions, dispatch)};
 },(stateProps, dispatchProps, ownProps) => {
   return Object.assign({}, ownProps, stateProps, dispatchProps);
 }, {
   pure: false,
   withRef: false
-})(News);
+})(User);

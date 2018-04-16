@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin') ;
 // let DashboardPlugin = require('webpack-dashboard/plugin');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 let CleanWebpackPlugin = require('clean-webpack-plugin');
+let WebpackZipPlugin =require('webpack-zip-plugin');
 let config = require('./config/index');
 /* eslint-disable-next-line */
 let isProd = process.argv[3] === 'production';
@@ -17,7 +18,10 @@ if (!isProd) {
   // plugins.push(new DashboardPlugin())
 }else{
   plugins.push(new webpack.DefinePlugin({'process.env.NODE_ENV': '"production"'}));
-
+  plugins.push(new WebpackZipPlugin({
+    initialFile: './dist',
+    zipName: 'operation.zip'
+  }));
 }
 plugins.push(new MiniCssExtractPlugin({
   filename: config.cssPath+'[name].[chunkhash:8].css',
@@ -90,7 +94,7 @@ plugins.push(new CopyWebpackPlugin([
 
 module.exports = {
   mode: isProd ? 'production' : 'development',
-  devtool: isProd ? 'hidden-source-map' : 'eval',
+  devtool: isProd ? 'cheap-module-source-map' : 'eval',
   context: config.context,
   entry: config.entry,
   output: config.output,
