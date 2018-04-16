@@ -1,0 +1,126 @@
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+/*eslint-disable no-unused-vars*/
+import { DatePicker, Button, message, Icon } from 'antd';
+/*eslint-enable no-unused-vars*/
+import newsActions from 'Root/redux/actions/newsActions';
+
+// mapStateToProps mapDispatchToProps mergeProps options
+
+/*
+@connect((state, ownProps)=>{
+  // console.log(state, ownProps)
+  return { newState: state.newState };
+},(dispatch) => {
+  // console.log(dispatch,ownProps)
+  return {action: bindActionCreators(newsActions, dispatch)};
+},(stateProps, dispatchProps, ownProps) => {
+  return Object.assign({}, ownProps, stateProps, dispatchProps);
+}, {
+  pure: false,
+  withRef: false
+})
+export default class Index extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onClickNews = this.onClickNews.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(date) {
+    message.info('您选择的日期是: ' + date.toString());
+  }
+  onClickNews() {
+    console.log(this);
+    // console.log(this.props.history)
+    this.props.history.replace('news');
+  }
+  // shouldComponentUpdate(){
+  //   return true
+  // }
+  componentDidMount() {
+    console.log(this.props.newState);
+    this.props.action.addTodo();
+    // let action = bindActionCreators(newsActions, this.props.store.dispatch)
+    // console.log(action)
+    // let act = action.addTodo({g: Math.random()})
+    // this.props.store.dispatch(act)
+    // store.dispatch({type: 'value', data: { g:Math.random() }})
+    // function reducer(state={}, action){
+    //   console.log(action.type)
+    //   switch (action.type) {
+    //     case 1111:
+    //       return {age:444,name:7777}
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    //   return state;
+    // }
+    // var store = createStore(reducer,{name:111,age:222})
+    // store.subscribe(function(...a){
+    //   console.log(store.getState())
+    //   console.log('=========')
+    // })
+    // console.log(createStore)
+    // console.log(store)
+    // console.log(store.getState())
+    // console.log(store.dispatch({type: 1111, data:'ddd'}))
+  }
+  render() {
+    console.log(this.props.newState)
+    return (
+      <div>
+        <DatePicker onChange={value => this.handleChange(value)} />
+        <Button className="btn-primary" onClick={this.onClickNews}>news</Button>
+        <a href="#">11111111111<Icon type="step-backward"></Icon> <Icon type="link">1111</Icon></a>
+        INdex{this.props.newState.g}===={this.props.newState.age}
+      </div>
+    );
+  }
+}
+*/
+
+class Index extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onClickNews = this.onClickNews.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(date) {
+    message.info('您选择的日期是: ' + date.toString());
+  }
+  onClickNews() {
+    this.props.history.replace('news');
+  }
+
+  componentDidMount() {
+    this.props.action.addTodo({code:'voucherlist'});
+    this.props.action.addTodo2({refCode:'accperiod',refType:'list',displayFields:['code','name']});
+  }
+  render() {
+    // console.log(this.props.newState);
+    return (
+      <div>
+        
+        <DatePicker onChange={value => this.handleChange(value)} />
+        <Button className="btn-primary" onClick={this.onClickNews}>news</Button>
+        <a href="#">11111111111<Icon type="step-backward"></Icon> <Icon type="link">1111</Icon></a>
+        INdex{this.props.newState.g}===={this.props.newState.age}
+      </div>
+    );
+  }
+}
+
+export default connect((state) => {
+  // console.log(state, ownProps)
+  return { newState: state.newState };
+},(dispatch) => {
+  // console.log(dispatch,ownProps)
+  return {action: bindActionCreators(newsActions, dispatch)};
+},(stateProps, dispatchProps, ownProps) => {
+  return Object.assign({}, ownProps, stateProps, dispatchProps);
+}, {
+  pure: false,
+  withRef: false
+})(Index);
